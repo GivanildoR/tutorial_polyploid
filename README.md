@@ -100,7 +100,7 @@ awk '!/^#/ {print $1}' 3_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf | sort -u
 ```
 
 ## STRUCTURE analysis
-
+### Filtering SNPs by LD
 To realize the Structure analysis we should filter using the LD (the Structure software doesn't work with marker in high LD.  
 To prune the SNPs by the LD, we can use the following command:  
 Here was considered LD=0.2 in windows with 200 bp, because there are clusters with ~200bp, remember it is not a whole sequence GBS.  
@@ -108,7 +108,7 @@ Here was considered LD=0.2 in windows with 200 bp, because there are clusters wi
 module load bcftools
 bcftools +prune -m 0.2 -w 200 Vcf_Sampled.vcf -Ob -o myvariants.vcf
 ```
-
+Using the 
 
 
 
