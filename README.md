@@ -1,28 +1,21 @@
 # Pipeline to working with polyploid genomic Flex-Seq data
 
-A personal pipeline to auxiliary on the manipulation of polyploid genomic data 🥔🫐 🍠
-
-It was created to auxiliar some processes in the lab, I would highlight that a bunch of scripts in R, and Python languages and command lines found here can be found in different repositories/journals. 
-
-Any comments or suggestions are welcome.
-   
-I would like to 
+A personal pipeline to auxiliary on the manipulation of polyploid genomic data 🥔🫐 🍠  
+It was created to auxiliar some processes in the lab, I would highlight that a bunch of scripts in R, and Python languages and command lines found here can be found in different repositories/journals.   
+Any comments or suggestions are welcome.  
 
 ## Organizing the genomic data
 
-Used data
+Used data  
 ```bash
   Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
 ```
-Obtaining and verifying the COD genotype names in the VCF file:
-
+Obtaining and verifying the COD genotype names in the VCF file:  
 ```bash
 awk '/^#CHROM/ {print}' Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
-```
-Let's presume that you have a phenotypic table and you want to consider just the samples with phenotypic information. Then, the genotypes with no information should be removed from the VCF file, to do this, let's consider: 
-
-We should create a .txt file containing the new codes, in this case, "Customer_Code". The first column is the "old name" and the second column is the "new name",  **without header**:
-
+```  
+Let's presume that you have a phenotypic table and you want to consider just the samples with phenotypic information. Then, the genotypes with no information should be removed from the VCF file, to do this, let's consider:    
+We should create a .txt file containing the new codes, in this case, "Customer_Code". The first column is the "old name" and the second column is the "new name",  **without header**:  
 The first 10 code names of the `genotype_names_mapping.txt` file: 
 
 <img width="156" alt="Imagem2" src="https://github.com/GivanildoR/tutorial_polyploid/assets/167666189/cbc07953-fa9d-47c3-bc1f-303bfc0e7fa5">
@@ -79,26 +72,22 @@ Just to check the genotype names in the final VCF
 bcftools query -l 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
 ```
 
-## Filtering by chromosomes
+## Filtering by chromosomes  
+### Sometimes the VCF file has specific parts from another reference genome just to verify any particular aspect in your panel.   
+### Sometimes you want to remove some scaffolds, anyways, you can verify the chromosomes names using:  
+### if it isn't your case, skip this step.  
 
-### Sometimes the VCF file has specific parts from another reference genome just to verify any particular aspect in your panel. 
-### Sometimes you want to remove some scaffolds, anyways, you can verify the chromosomes names using:
-### if it isn't your case, skip this step.
-
-If you don't have the `.gz` format
-
+If you don't have the `.gz` format  
 ```bash
 bgzip -c 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf > 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf.gz
 ```
 
-Checking:
-
+Checking:  
 ```bash
 awk '!/^#/ {print $1}' 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf | sort -u
 ```
 
-Filtering by chromosomes` names, in my case I'm interested just on the chr01 to chr12
-
+Filtering by chromosomes` names, in my case I'm interested just on the chr01 to chr12  
 ```bash
 #the vcf file should be indexed
 bcftools index 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf.gz
@@ -112,10 +101,13 @@ awk '!/^#/ {print $1}' 3_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf | sort -u
 
 ## STRUCTURE analysis
 
-To realize the Structure analysis we should filter using the LD (the Structure software doesn't work with marker in high LD.
-
-To prune the SNPs by the LD, we can use the following command:
-
+To realize the Structure analysis we should filter using the LD (the Structure software doesn't work with marker in high LD.  
+To prune the SNPs by the LD, we can use the following command:  
+Here was considered LD=0.2 in windows with 200 bp, because there are clusters with ~200bp, remember it is not a whole sequence GBS.  
+```bash
+module load bcftools
+bcftools +prune -m 0.2 -w 200 Vcf_Sampled.vcf -Ob -o myvariants.vcf
+```
 
 
 
