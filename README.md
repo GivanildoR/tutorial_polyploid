@@ -1,7 +1,7 @@
-# Pipeline to working with polyploid genomic Flex-Seq data
+# Working with polyploid genomic Flex-Seq data - an introductory pipeline  
 
-A personal pipeline to auxiliary on the manipulation of polyploid genomic data 🥔🫐 🍠  
-It was created to auxiliar some processes in the lab, I would highlight that a bunch of scripts in R, and Python languages and command lines found here can be found in different repositories/journals.   
+It is a personal pipeline to auxiliary on the manipulation of polyploid genomic data 🥔  
+It was created to auxiliar some processes in the lab, I would highlight that a bunch of scripts in R, and Python languages and command lines found here can be found in different repositories/journals. Here, I could save some important information for a noob 💻   
 Any comments or suggestions are welcome.  
 
 ## Organizing the genomic data
@@ -101,12 +101,12 @@ awk '!/^#/ {print $1}' 3_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf | sort -u
 
 ## STRUCTURE analysis
 ### Filtering SNPs by LD
-To realize the Structure analysis we should filter using the LD (the Structure software doesn't work with marker in high LD.  
+To realize the Structure analysis we should filter using the LD (the Structure software doesn't work with markers in high LD).  
 To prune the SNPs by the LD, we can use the following command:  
 Here was considered LD=0.2 in windows with 200 bp, because there are clusters with ~200bp, remember it is not a whole sequence GBS.  
 ```bash
 module load bcftools
-bcftools +prune -m 0.2 -w 200 Vcf_Sampled.vcf -Ob -o myvariants.vcf
+bcftools +prune -m 0.2 -w 200 3_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf -Ob -o myvariants.vcf
 ```
 Using the 
 
