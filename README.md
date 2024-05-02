@@ -1,7 +1,7 @@
 # Working with polyploid genomic Flex-Seq data - an introductory pipeline  
 
 It is a personal pipeline to auxiliary on the manipulation of polyploid genomic data 🥔  
-It was created to auxiliar some processes in the lab, I would highlight that a bunch of scripts in R, and Python languages and command lines found here can be found in different repositories/journals. Here, I could save some important information for a noob 💻   
+It was created to auxiliar some processes in the lab, I would highlight that a bunch of scripts in R, and Python languages and command lines found here can be found in different repositories/journals. Here, I could save some important information for me 💻   
 Any comments or suggestions are welcome.  
 
 ## Organizing the genomic data
@@ -108,7 +108,49 @@ Here was considered LD=0.2 in windows with 200 bp, because there are clusters wi
 module load bcftools
 bcftools +prune -m 0.2 -w 200 3_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf -Ob -o myvariants.vcf
 ```
-Using the 
+You can verify the content of `myvariants.vcf`  
+
+Now, you can select 
+```R
+library(vcfR)
+vcfdata <- read.vcfR("/blue/mresende/share/Givanildo/Tutorial/3_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf")
+
+#filtering the SNPs, it is because the STRUCTURE software consider that all markers are not in linkage disequilibrium
+
+#Calling the M data
+M <- read.csv("/blue/mresende/share/Givanildo/GWAS_85k/geno_ready.csv")
+
+#creating a function
+select_random_snp_per_interval <- function(snp_data_chr, interval_length = 200) {
+  # Make sure data is sorted by Position
+  snp_data_chr <- snp_data_chr[order(snp_data_chr$Position),]
+  
+  # Create intervals
+  max_pos <- max(snp_data_chr$Position)
+  intervals <- seq(0, max_pos, by = interval_length)
+  
+  selected_snps <- list()
+  
+  for (i in seq_along(intervals)[-length(intervals)]) {
+    snps_in_interval <- snp_data_chr[snp_data_chr$Position > intervals[i] & snp_data_chr$Position <= intervals[i + 1], ]
+    
+    if (nrow(snps_in_interval) > 0) {
+      selected_snp <- snps_in_interval[sample(nrow(snps_in_interval), 1), ]
+      selected_snps[[i]] <- selected_snp
+    }
+  }
+  
+  do.call(rbind, selected_snps)
+}
+
+library(dplyr)
+random_snps <- M %>%  
+  group_by(Chrom) %>% 
+  group_modify(~select_random_snp_per_interval(.x)) %>% 
+  ungroup()
+
+write.csv(random_snps, "SNPs_LD_pruned.csv")
+```
 
 
 
