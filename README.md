@@ -267,47 +267,13 @@ table <- read.table("/blue/mresende/share/Givanildo/Structure_files/structure_ou
 ```
 ## Running the STRUCTURE analysis  
 ### mainparams  
-```R
-#####################################
-#### Creating the mainparams  SEE: https://github.com/labroo2/deStructure
-#####################################
-#make a temporary output file path
-setwd("/blue/mresende/share/Givanildo/Structure_files")
-output_file <- "/blue/mresende/share/Givanildo/Structure_files/RUN_STRUCTURE/mainparams.txt"
-#run mainparams function; output to temp directory
-#install.packages("remotes")
-#remotes::install_github("labroo2/deStructure")
-library(deStructure)
-mainparams(maxpops = NULL, burnin = 1000, numreps = 10000, infile = "structure_output.txt",
-           outfile = "my_output_file", numinds = "571", numloci = "85002",
-           ploidy = 4, missing = -9, onerowperind = 0, label = 1,
-           popdata = 0, popflag = 0, locdata = 0, phenotype = 0, extracols = 0,
-           markernames = 1, recessivealleles = 0, mapdistances = 0, phased = 0,
-           phaseinfo = 0, markovphase = NULL, notambiguous = NULL, outpath = output_file)
-```  
+
+[mainparams](https://github.com/GivanildoR/tutorial_polyploid/blob/main/mainparams.R)
+
 ### extraparams  
-```R
-####################################
-### Creating the extraparams SEE: https://github.com/labroo2/deStructure
-####################################
-output_file <- "/blue/mresende/share/Givanildo/Structure_files/RUN_STRUCTURE/extraparams.txt"
-extraparams(noadmix = 0, linkage = 0, usepopinfo = 0, locprior = 0, 
-                        freqscorr = 1, onefst = 0, inferalpha = 1, popalphas = 0,
-                        alpha = 1.0, inferlambda = 0, popspecificlambda = NULL,
-                        lambda = 1.0, fpriormean = 0.01, fpriorsd = 0.05,
-                        unifprioralpha = 1, alphamax = 10.0, log10rmin = NULL,
-                        log10rmax = NULL, log10propsd = NULL, log10rstart = NULL,
-                        gensback = NULL, migrprior = NULL, pfrompopflagonly = 0,
-                        locispop = NULL, locpriorinit = NULL, maxlocprior = NULL,
-                        printnet = NULL, printlambda = NULL, printqsum = NULL,
-                        sitebysite = NULL, printqhat = NULL, updatefreq = NULL,
-                        printlikes = NULL, intermedsave = NULL, echodata = NULL,
-                        ancestdist = 0, computeprob = 1, admburnin = NULL,
-                        alphapropsd = 0.025, startatpopinfo = 0, randomize = NULL,
-                        seed = NULL, metrofreq = 10, reporthitrate = NULL, outpath = output_file)
-```
+[extraparams](https://github.com/GivanildoR/tutorial_polyploid/blob/main/extraparams.R)
 
-
+### submitting the Structure job on the HPG  
 
 
 
