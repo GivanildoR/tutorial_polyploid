@@ -23,3 +23,11 @@ select_random_snp_per_interval <- function(snp_data_chr, interval_length = 200) 
   
   do.call(rbind, selected_snps)
 }
+
+library(dplyr)
+random_snps <- M %>%  
+  group_by(Chrom) %>% 
+  group_modify(~select_random_snp_per_interval(.x)) %>% 
+  ungroup()
+
+write.csv(random_snps, "SNPs_LD_pruned.csv")
