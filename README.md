@@ -135,7 +135,7 @@ The matrix should be in dimension genotypes in the row names and markers in the 
 ### submitting the Structure job on the HPG   
 [Structure.sh](https://github.com/GivanildoR/tutorial_polyploid/blob/main/Structure.sh)  
 
-### Hasverting and working with the Structure output  
+### Harvesting and handling the Structure output  
 [working_str_output.R](https://github.com/GivanildoR/tutorial_polyploid/blob/main/working_str_output.R)
 
 
