@@ -122,6 +122,7 @@ Now use the select_random_snp_per_interval to reduce the quantity of SNP
 
 ### Converting to Structure format
 
+The matrix should be in dimension genotypes in the row names and markers in the column names  
 [numeric2structure.R](https://github.com/GivanildoR/tutorial_polyploid/blob/main/numeric2structure.R) 
 
 ## Running the STRUCTURE analysis  
