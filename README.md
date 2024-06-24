@@ -1,6 +1,7 @@
 # Working with polyploid genomic Flex-Seq data - an introductory pipeline  
 
 It is a personal pipeline to auxiliary on the manipulation of polyploid genomic data 🥔  
+This repository was created because ~I have a fish memory~ to keep the command lines for vcf analysis.  
 It was created to auxiliar and to evaluate the processes. A bunch of scripts in R, and Python languages and command lines found here can be found in different repositories/journals. Here, I could save some considerable important information for me 💻  
 
 Firstly, [here](https://eriqande.github.io/eca-bioinf-handbook/handle-vcf.html), there is a tutorial for noobs on the command line like me.   
