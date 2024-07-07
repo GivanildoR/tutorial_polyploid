@@ -17,43 +17,39 @@ Obtaining and verifying the COD genotype names in the VCF file:
 ```bash
 awk '/^#CHROM/ {print}' Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
 ```  
-Let's presume that you have a phenotypic table and you want to consider just the samples with phenotypic information. Then, the genotypes with no information should be removed from the VCF file, to do this, let's consider:    
-We should create a .txt file containing the new codes, in this case, "Customer_Code". The first column is the "old name" and the second column is the "new name",  **without header**:  
-The first 10 code names of the `genotype_names_mapping.txt` file: 
+Let's presume that you have a phenotypic table and you want to consider just the samples with phenotypic information. Then, the genotypes with no information should be removed from the VCF file, to do this, you can also use it for change the sample names in the vcf file :    
+We should create a .txt file containing the new codes, in this case, "Customer_Code". The first column is the "old name" and the second column is the "new name",  **you don't need put a header**
 
+### Removing non-phenotyped samples  
+The `rename_map.txt`:  
 <img width="156" alt="Imagem2" src="https://github.com/GivanildoR/tutorial_polyploid/assets/167666189/cbc07953-fa9d-47c3-bc1f-303bfc0e7fa5">
 
-Based on the first column of `genotype_names_mapping.txt` let's filter the VCF file:
-
-Step #1
-
+Step #1 Extracting only the first column 
 ```bash
 cut -f1 genotype_names_mapping.txt > lista_ids.txt
 ```
 
-Step #2 using the `bcftools` to filter:
-
+Step #2 using the `bcftools` to remove samples without phenotypic data based on the `lista_ids.txt` obtained on the last step:
 ```bash
 bcftools view -S lista_ids.txt CopyOfFinal_DP10_Corrected_UFL_137106_RAW_SNPs.vcf -o
  1_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
 ```
+### Renaming the samples in the vcf file  
 Put the [rename_samples.py](https://github.com/GivanildoR/tutorial_polyploid/blob/main/rename_samples.py) in the same directory as your genomic data and run
 
 Running the python script:
-
 ```python
-#python renomear_amostras.py genotype_names_mapping.txt 1_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf > 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
+#python renomear_amostras.py rename_map.txt 1_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf > 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
 ```
 
 Just to check the genotype names in the final VCF
-
 ```bash
 bcftools query -l 2_Final_DP10_Corrected_UFL_137106_RAW_SNPs.vcf
 ```
 
 ## Filtering by chromosomes  
 ### Sometimes the VCF file has specific parts from another reference genome just to verify any particular aspect in your panel.   
-### Sometimes you want to remove some scaffolds, anyways, you can verify the chromosomes names using:  
+### Sometimes you want to remove some scaffolds, anyway, you can verify the chromosome names using:  
 ### if it isn't your case, skip this step.  
 
 If you don't have the `.gz` format  
