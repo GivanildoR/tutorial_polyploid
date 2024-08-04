@@ -72,12 +72,14 @@ numeric2structure <- function(genmat,
 }
 
 ## STEP 2 - Converting the genomic matrix to FastStructure/STRUCTURE format
-numeric2structure(genmat = matrix, 
-                  file = "/blue/mresende/share/Givanildo/Structure_files/structure_output.txt", 
-                  indNames = row.names(matrix), 
+matrix1 <- matrix[,-c(1:4)]
+matrix1 <- t(matrix1)
+numeric2structure(genmat = matrix1, 
+                  file = "/blue/mresende/share/Givanildo/structure/structure_output.txt", 
+                  indNames = row.names(matrix1), 
                   addtlColumns = NULL, 
                   ploidy = 4, 
                   exportMarkerNames = TRUE)
 
 #Verifying the file:
-table <- read.table("/blue/mresende/share/Givanildo/Structure_files/structure_output.txt", row.names = NULL, header = T)
+table <- read.table("/blue/mresende/share/Givanildo/structure/structure_output.txt", row.names = NULL, header = T)
